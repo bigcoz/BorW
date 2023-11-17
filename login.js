@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 로그인이 성공하면 다른 페이지로 이동합니다.
     if (username === "test" && password === "test") {
-      window.location.href = "main.html"; // 다른 페이지로 이동
+      window.location.href = "./main.html"; // 다른 페이지로 이동
     } else {
       alert("로그인 실패. 사용자 이름과 비밀번호를 다시 확인하세요.");
     }
