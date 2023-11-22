@@ -1,6 +1,6 @@
 async function fetchBusStopData() {
   const apiURLBusStopID =
-    "http://apis.data.go.kr/6260000/BusanBIMS/busInfoByRouteId";
+    "https://apis.data.go.kr/6260000/BusanBIMS/busInfoByRouteId";
   const paramsBusStopID = {
     lineid: "5291107000",
     serviceKey:
@@ -24,7 +24,7 @@ async function fetchBusStopData() {
       const nodeid = item.getElementsByTagName("nodeid")[0].textContent;
 
       const responseLeftTime = await fetch(
-        `http://apis.data.go.kr/6260000/BusanBIMS/stopArrByBstopid?bstopid=${nodeid}&serviceKey=${paramsBusStopID.serviceKey}`
+        `https://apis.data.go.kr/6260000/BusanBIMS/stopArrByBstopid?bstopid=${nodeid}&serviceKey=${paramsBusStopID.serviceKey}`
       );
       const xmlDataLeftTime = await responseLeftTime.text();
       const xmlDocLeftTime = parser.parseFromString(
@@ -325,44 +325,6 @@ var polylineDown = new kakao.maps.Polyline({
 // 지도에 선을 표시합니다
 polylineUp.setMap(map);
 polylineDown.setMap(map);
-
-// var positionsBus = [
-//   {
-//     title: "버스1",
-//     latlng: new kakao.maps.LatLng(35.230246580858164, 129.0891073675078),
-//   },
-//   {
-//     title: "버스2",
-//     latlng: new kakao.maps.LatLng(35.23161335925278, 129.0843154322147),
-//   },
-//   {
-//     title: "버스3",
-//     latlng: new kakao.maps.LatLng(35.23512298941006, 129.08145620498348),
-//   },
-//   {
-//     title: "버스4",
-//     latlng: new kakao.maps.LatLng(35.23264148077286, 129.07771895447308),
-//   },
-//   {
-//     title: "버스5",
-//     latlng: new kakao.maps.LatLng(35.23324649632328, 129.07633403562733),
-//   },
-//   {
-//     title: "버스6",
-//     latlng: new kakao.maps.LatLng(35.23567235801142, 129.0785925750818),
-//   },
-//   {
-//     title: "버스7",
-//     latlng: new kakao.maps.LatLng(35.23278229756213, 129.0834172745849),
-//   },
-// {
-//   title: "버스8",
-//   latlng: new kakao.maps.LatLng(35.228741275907296, 129.08495031834047),
-// },
-// ];
-
-//
-//
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
 if (navigator.geolocation) {
