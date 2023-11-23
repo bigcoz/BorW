@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bus or Walk</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
       @font-face {
         font-family: 'NanumHandwriting';
@@ -22,14 +23,15 @@
       }
 
       .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 60%; /* Adjusted width for better visibility */
-        resize: vertical; /* Allow vertical resizing */
-        overflow: auto; /* Enable scrolling if content exceeds the modal size */
-      }
+  background-color: #fefefe;
+  margin: 10% auto; /* 수정: 상하 여백을 10%로 조정 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* 수정: 60%에서 80%로 조정 */
+  resize: vertical;
+  overflow: auto;
+  /* 기존 스타일... */
+}
       body,
       html,
       th,
@@ -105,7 +107,7 @@
         background-color: #d2f0ef; /* 민트색으로 변경 */
       }
     </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
   </head>
   <body>
     <nav>
@@ -299,7 +301,7 @@
           </table>
       <div id="myModal" class="modal">
             <div class="modal-content">
-              <label for="modalInput">Choose a value:</label>
+              <label for="modalInput">건물명을 선택해 주세요:</label>
               <input list="options" id="modalInput">
               <datalist id="options">
                 <option value="102 - 제1 부속공장"></option>
