@@ -1,6 +1,6 @@
 function handleCellClick(cell) {
-  // Check if the clicked cell is in the Tuesday column (index 2 in the row)
-  if (cell.cellIndex === 2) {
+  // Check if the clicked cell is in either the Monday or Tuesday column
+  if (cell.cellIndex === 1 || cell.cellIndex === 2) {
     // Set the currentCell variable to keep track of the clicked cell
     currentCell = cell;
 
