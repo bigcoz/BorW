@@ -46,10 +46,10 @@ cells.forEach(function(cell) {
   });
 });
 
-// Variable to keep track of the clicked cell
+// 클릭한 셀을 추적하는 변수
 var currentCell;
 
-// Function to save the entire table data to local storage
+// 테이블 데이터 전체를 로컬 스토리지에 저장하는 함수
 function saveTableData() {
   const tableData = [];
 
@@ -57,9 +57,12 @@ function saveTableData() {
   rows.forEach((row) => {
     const rowData = [];
 
+    // th 셀을 선택에서 제외합니다.
     const cells = row.querySelectorAll("td");
-    cells.forEach((cell) => {
-      rowData.push(cell.textContent);
+    cells.forEach((cell, cellIndex) => {
+      if (cellIndex > 0) { // 첫 번째 셀은 th 셀이므로 제외
+        rowData.push(cell.textContent);
+      }
     });
 
     tableData.push(rowData);
@@ -68,7 +71,7 @@ function saveTableData() {
   localStorage.setItem("tableData", JSON.stringify(tableData));
 }
 
-// Function to load the entire table data from local storage
+// 로컬 스토리지에서 전체 테이블 데이터를 로드하는 함수
 function loadTableData() {
   const storedData = localStorage.getItem("tableData");
 
@@ -79,7 +82,9 @@ function loadTableData() {
     rows.forEach((row, rowIndex) => {
       const cells = row.querySelectorAll("td");
       cells.forEach((cell, cellIndex) => {
-        cell.textContent = tableData[rowIndex][cellIndex];
+        if (cellIndex > 0) { // 첫 번째 셀은 th 셀이므로 제외
+          cell.textContent = tableData[rowIndex][cellIndex - 1];
+        }
       });
     });
   }
