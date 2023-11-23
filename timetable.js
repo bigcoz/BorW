@@ -84,3 +84,11 @@ function loadTableData() {
     });
   }
 }
+
+document.getElementById('myModal').addEventListener('click', function(event) {
+  // Check if the clicked element is the modal overlay itself
+  if (event.target === this) {
+    // Close the modal
+    document.getElementById('myModal').style.display = 'none';
+  }
+});
