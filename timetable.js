@@ -1,15 +1,18 @@
 function handleCellClick(cell) {
-  // Set the currentCell variable to keep track of the clicked cell
-  currentCell = cell;
+  // Check if the clicked cell is in the Tuesday column (index 2 in the row)
+  if (cell.cellIndex === 2) {
+    // Set the currentCell variable to keep track of the clicked cell
+    currentCell = cell;
 
-  // Load the previously selected value from local storage
-  var storedValue = localStorage.getItem('tableData') ? JSON.parse(localStorage.getItem('tableData'))[currentCell.id] : null;
-  if (storedValue) {
-    document.getElementById('modalInput').value = storedValue;
+    // Load the previously selected value from local storage
+    var storedValue = localStorage.getItem('tableData') ? JSON.parse(localStorage.getItem('tableData'))[currentCell.id] : null;
+    if (storedValue) {
+      document.getElementById('modalInput').value = storedValue;
+    }
+
+    // Display the modal
+    document.getElementById('myModal').style.display = 'block';
   }
-
-  // Display the modal
-  document.getElementById('myModal').style.display = 'block';
 }
 
 // Function to save the selected value to the table cell and local storage
