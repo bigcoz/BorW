@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bus or Walk</title>
     <style>
+      @font-face {
+        font-family: 'NanumHandwriting';
+        src: url('./나눔손글씨 나는 이겨낸다.ttf');
+      }
       #myModal {
         display: none;
         position: fixed;
@@ -26,7 +30,16 @@
         resize: vertical; /* Allow vertical resizing */
         overflow: auto; /* Enable scrolling if content exceeds the modal size */
       }
-    
+      body,
+      html,
+      th,
+      td {
+        text-align: center; /* 가운데 정렬 설정 */
+        font-family: 'NanumHandwriting', sans-serif;
+      }
+      h2{
+        font-family: 'NanumHandwriting', sans-serif;
+      }
       body,
       html {
         padding: 0;
@@ -35,10 +48,11 @@
       }
 
       nav {
+        font-family: 'NanumHandwriting', sans-serif;
         position: fixed;
         top: 0;
         left: 0;
-        width: 100px;
+        width: 140px;
         height: 100%;
         background-color: #d2f0ef;
         padding: 20px;
@@ -72,18 +86,23 @@
       height: 400px;
       }
       table {
+        text-align: center; /* 가운데 정렬 설정 */
         border-collapse: collapse;
         width: 100%;
+        border-radius: 10px; /* 모서리를 둥글게 설정 */
+        overflow: hidden; /* 내용이 모서리를 넘어가지 않도록 설정 */
       }
       table, th, td {
         border: 1px solid black;
       }
       th, td {
+        text-align: center; /* 가운데 정렬 설정 */
         padding: 8px;
         text-align: left;
+        border: 1px dotted #000; /* 점선으로 변경 */
       }
       th {
-        background-color: #f2f2f2;
+        background-color: #d2f0ef; /* 민트색으로 변경 */
       }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -96,9 +115,9 @@
         style="width: 100px; height: auto"
       />
       <ul>
-        <li><a href="#bow">BoW</a></li>
         <li><a href="#time-table">Time Table</a></li>
         <li><a href="#mappage">Map</a></li>
+        <li><a href="#bow">BoW</a></li>
       </ul>
     </nav> 
 
@@ -408,5 +427,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="mappage.js"></script>
     <script src="timetable.js"></script>
+    <script src="nav.js"></script>
   </body>
 </html>
