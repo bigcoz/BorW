@@ -56,7 +56,6 @@ async function fetchBusStopData() {
       const min1Value = min1 ? min1.textContent : "No data";
 
       extractedDataLeftTime.push({ bstopnm, nodeid, min1Value });
-      console.log(bstopnm, nodeid, min1Value);
     }
   } catch (error) {
     console.error("Error:", error);
