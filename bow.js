@@ -585,77 +585,64 @@ var locationsData = [
 ];
 
 function getCurrentAndNextLocationWithDefaultUpdate() {
-  // 현재 날짜 및 시간을 가져옵니다.
   var now = new Date();
   var day = now.getDay(); // 요일 (0=일요일, 1=월요일, ...)
   var hour = now.getHours(); // 시간 (분은 무시)
 
-  var currentLocation = "No data available";
+  var currentLocation = "000 - 정문";
   var nextLocation = "No data available";
 
-  // 테이블에서 해당 시간과 요일에 해당하는 셀을 찾습니다.
   var table = document.getElementById("locationTable");
   var rows = table.getElementsByTagName("tr");
 
-  // 현재 시간이 오전 9시보다 이르면, currentLocation을 "000 - 정문"으로 설정
-  if (hour < 9) {
-    currentLocation = "000 - 정문";
-    // 해당 요일의 데이터가 있는 최상단 셀의 내용을 찾습니다.
-    for (var i = 1; i < rows.length; i++) {
-      // 헤더 행을 제외하고 시작
-      var cell = rows[i].cells[day];
-      if (cell && cell.textContent.trim()) {
-        nextLocation = cell.textContent.trim();
-        break;
+  var timeString = hour >= 12 ? "오후 " : "오전 ";
+  hour = hour % 12;
+  hour = hour ? hour : 12; // 시간이 0이면 12로 변경
+  timeString += hour + ":00";
+
+  // 현재 시간과 일치하는 행을 찾기
+  var foundCurrent = false;
+  for (var i = 0; i < rows.length; i++) {
+    var firstCell = rows[i].cells[0];
+    if (firstCell && firstCell.textContent.trim() === timeString) {
+      var currentCell = rows[i].cells[day];
+      if (currentCell && currentCell.textContent.trim()) {
+        currentLocation = currentCell.textContent.trim();
+        foundCurrent = true;
       }
+      break;
     }
-  } else {
-    // 현재 시간과 일치하는 행을 찾고, currentLocation 및 nextLocation을 설정
-    var timeString = hour >= 12 ? "오후 " : "오전 ";
-    hour = hour % 12;
-    hour = hour ? hour : 12; // 시간이 0이면 12로 변경
-    timeString += hour + ":00";
+  }
 
-    console.log(day);
-    console.log(timeString);
-
-    for (var j = 0; j < rows.length; j++) {
-      var firstCell = rows[j].cells[0];
-      if (firstCell && firstCell.textContent.trim() === timeString) {
-        // 현재 시간에 해당하는 셀을 찾았습니다.
-        var currentCell = rows[j].cells[day];
-        currentLocation =
-          currentCell && currentCell.textContent.trim()
-            ? currentCell.textContent.trim()
-            : "No data available";
-
-        // 다음 위치를 찾습니다.
-        var foundNext = false;
-        for (var k = j + 1; k < rows.length; k++) {
-          var cellBelow = rows[k].cells[day];
-          if (cellBelow && cellBelow.textContent.trim()) {
-            nextLocation = cellBelow.textContent.trim();
-            foundNext = true;
-            break;
-          }
-        }
-
-        // 다음 위치가 없을 경우, "000 - 정문"으로 설정
-        if (!foundNext) {
-          nextLocation = "000 - 정문";
-        }
+  // 현재 위치를 찾지 못했으면, 위쪽 방향으로 가장 가까운 데이터 찾기
+  if (!foundCurrent) {
+    for (var j = i - 1; j > 0; j--) {
+      var cellAbove = rows[j].cells[day];
+      if (cellAbove && cellAbove.textContent.trim()) {
+        currentLocation = cellAbove.textContent.trim();
         break;
       }
     }
   }
 
-  // nextLocation이 비어있을 경우, 업데이트합니다.
-  if (!nextLocation || nextLocation === "No data available") {
+  // 다음 위치 찾기
+  var foundNext = false;
+  for (var k = i + 1; k < rows.length; k++) {
+    var cellBelow = rows[k].cells[day];
+    if (cellBelow && cellBelow.textContent.trim()) {
+      nextLocation = cellBelow.textContent.trim();
+      foundNext = true;
+      break;
+    }
+  }
+
+  if (!foundNext) {
     nextLocation = "000 - 정문";
   }
 
   return { currentLocation, nextLocation };
 }
+
 // 네이버 지도 URL 생성
 function generateNaverMapURL(currentLocation, nextLocation) {
   var currentLocationData = locationsData.find(
