@@ -1,74 +1,54 @@
+// 셀 클릭 핸들러
 function handleCellClick(cell) {
-  // Check if the clicked cell is in either the Monday or Tuesday column
-  if (cell.cellIndex === 1 || cell.cellIndex === 2) {
-    // Set the currentCell variable to keep track of the clicked cell
-    currentCell = cell;
+  currentCell = cell;
 
-    // Load the previously selected value from local storage
-    var storedValue = localStorage.getItem('tableData') ? JSON.parse(localStorage.getItem('tableData'))[currentCell.id] : null;
-    if (storedValue) {
-      document.getElementById('modalInput').value = storedValue;
-    }
+  var storedValue = localStorage.getItem(cell.id) || "";
+  document.getElementById("modalInput").value = storedValue;
 
-    // Display the modal
-    document.getElementById('myModal').style.display = 'block';
-  }
+  document.getElementById("myModal").style.display = "block";
 }
 
-// Function to save the selected value to the table cell and local storage
-function saveSelectedValue() {
-  var modalInput = document.getElementById('modalInput');
-  var selectedValue = modalInput.value;
-
-  // Check if a cell was clicked
-  if (currentCell) {
-    // Save the selected value to the table cell
-    currentCell.textContent = selectedValue;
-
-    // Save the entire table data to local storage
-    saveTableData();
-
-    // Close the modal
-    document.getElementById('myModal').style.display = 'none';
-  }
-}
-
-window.addEventListener('load', function() {
-  if (typeof(Storage) !== "undefined") {
-    // Load the entire table data from local storage
-    loadTableData();
-  } else {
-    console.error("Local storage is not supported");
-  }
-});
-
-var cells = document.querySelectorAll('#locationTable tbody td');
-cells.forEach(function(cell) {
-  cell.addEventListener('click', function() {
+// 셀에 대한 이벤트 리스너 추가
+var cells = document.querySelectorAll("#locationTable tbody td");
+cells.forEach(function (cell) {
+  cell.addEventListener("click", function () {
     handleCellClick(cell);
   });
 });
 
-// 클릭한 셀을 추적하는 변수
-var currentCell;
+// 선택된 값을 저장하는 함수
+function saveSelectedValue() {
+  var modalInput = document.getElementById("modalInput");
+  var selectedValue = modalInput.value;
+
+  if (currentCell) {
+    currentCell.textContent = selectedValue;
+    localStorage.setItem(currentCell.id, selectedValue);
+
+    document.getElementById("myModal").style.display = "none";
+  }
+}
+
+// 페이지 로드 시 테이블 데이터 불러오기
+window.addEventListener("load", function () {
+  cells.forEach(function (cell) {
+    var storedValue = localStorage.getItem(cell.id);
+    if (storedValue) {
+      cell.textContent = storedValue;
+    }
+  });
+});
 
 // 테이블 데이터 전체를 로컬 스토리지에 저장하는 함수
 function saveTableData() {
-  const tableData = [];
+  const tableData = {};
 
   const rows = document.querySelectorAll("#locationTable tbody tr");
   rows.forEach((row) => {
-    const rowData = [];
-
-    // th 셀을 선택에서 제외합니다.
     const cells = row.querySelectorAll("td");
-    cells.forEach((cell, cellIndex) => {
-      if (cellIndex > 0) { // 첫 번째 셀은 th 셀이므로 제외
-        rowData.push(cell.textContent);
-      }
+    cells.forEach((cell) => {
+      tableData[cell.id] = cell.textContent; // 모든 셀의 데이터를 저장
     });
-
-    tableData.push(rowData);
   });
 
   localStorage.setItem("tableData", JSON.stringify(tableData));
@@ -82,21 +62,22 @@ function loadTableData() {
     const tableData = JSON.parse(storedData);
 
     const rows = document.querySelectorAll("#locationTable tbody tr");
-    rows.forEach((row, rowIndex) => {
+    rows.forEach((row) => {
       const cells = row.querySelectorAll("td");
-      cells.forEach((cell, cellIndex) => {
-        if (cellIndex > 0) { // 첫 번째 셀은 th 셀이므로 제외
-          cell.textContent = tableData[rowIndex][cellIndex - 1];
+      cells.forEach((cell) => {
+        const cellData = tableData[cell.id];
+        if (cellData) {
+          cell.textContent = cellData; // 모든 셀의 데이터를 불러오기
         }
       });
     });
   }
 }
 
-document.getElementById('myModal').addEventListener('click', function(event) {
+document.getElementById("myModal").addEventListener("click", function (event) {
   // Check if the clicked element is the modal overlay itself
   if (event.target === this) {
     // Close the modal
-    document.getElementById('myModal').style.display = 'none';
+    document.getElementById("myModal").style.display = "none";
   }
 });
