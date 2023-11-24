@@ -697,10 +697,10 @@ console.log(generateMainUrl());
 var urls = generateMainUrl();
 
 function openWindowTransit() {
-  window.open(urls.transitUrl, "_blank");
+  window.open(generateMainUrl().transitUrl, "_blank");
 }
 function openWindowWalk() {
-  window.open(urls.walkUrl, "_blank");
+  window.open(generateMainUrl().walkUrl, "_blank");
 }
 
 window.onload = function () {
